@@ -51,6 +51,32 @@
 #include <QtWidgets>
 #include "mainwindow.h"
 #include <qtwebenginewidgetsglobal.h>
+#include "cl_bridge_utils.hpp"
+
+string  CL_MAIN_FASB = "\"hello-lisp-system--all-systems.fasb\"";
+string  CL_MAIN_PACKAGE_NAME = "hello-lisp";
+
+#define __cl_init_name init_lib_LISP_ENVI
+
+extern "C"{
+
+  extern void __cl_init_name(cl_object);
+
+}
+
+void init_cl_env(int argc, char * argv[]){
+  /* Initialize CL environment */
+  cl_boot(argc, argv);
+  ecl_init_module(NULL, __cl_init_name);
+  /* load fasb */
+  cl_eval("load", CL_MAIN_FASB);
+  /* set context to current package */
+  cl_eval("in-package", CL_MAIN_PACKAGE_NAME);
+  /* hook for shutting down cl env */
+  atexit(cl_shutdown);
+}
+
+#undef __cl_init_named
 
 int main(int argc, char * argv[])
 {
@@ -66,5 +92,6 @@ int main(int argc, char * argv[])
     MainWindow *browser = new MainWindow(url);
     browser->resize(1024, 768);
     browser->show();
+    // init_cl_env(argc, argv); /* init env */
     return app.exec();
 }

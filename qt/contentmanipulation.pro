@@ -24,3 +24,4 @@ QMAKE_CXXFLAGS += `/usr/local/bin/ecl-config --cflags`
 QMAKE_LFLAGS += `/usr/local/bin/ecl-config --ldflags`
 
 LIBS += -lecl
+LIBS += $$_PRO_FILE_PWD_/lisp-envi.a

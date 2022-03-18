@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/" >
         <file>jquery.min.js</file>
+        <file>ele.png</file>
     </qresource>
 </RCC>

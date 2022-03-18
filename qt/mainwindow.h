@@ -71,6 +71,7 @@ protected slots:
     void finishLoading(bool);
 
     void viewSource();
+    void onMyAction();  
 
     void highlightAllLinks();
     void rotateImages(bool invert);

@@ -80,6 +80,12 @@ MainWindow::MainWindow(const QUrl& url)
     toolBar->addAction(view->pageAction(QWebEnginePage::Forward));
     toolBar->addAction(view->pageAction(QWebEnginePage::Reload));
     toolBar->addAction(view->pageAction(QWebEnginePage::Stop));
+
+    QAction *myAction = new QAction(tr("My Action"), this);
+    myAction->setIcon(QIcon(":/ele.png"));
+    toolBar->addAction(myAction);
+    connect(myAction, &QAction::triggered, this, &MainWindow::onMyAction);
+    
     toolBar->addWidget(locationEdit);
 
     QMenu *viewMenu = menuBar()->addMenu(tr("&View"));
@@ -104,6 +110,20 @@ MainWindow::MainWindow(const QUrl& url)
     toolsMenu->addAction(tr("Remove all embedded elements"), this, &MainWindow::removeEmbeddedElements);
 
     setCentralWidget(view);
+}
+
+
+void MainWindow::onMyAction()
+{
+    QTextEdit *textEdit = new QTextEdit(nullptr);
+    textEdit->setAttribute(Qt::WA_DeleteOnClose);
+    textEdit->adjustSize();
+    textEdit->move(this->geometry().center() - textEdit->rect().center());
+    textEdit->show();
+
+    view->page()->toHtml([textEdit](const QString &html){
+        textEdit->setPlainText(html);
+    });
 }
 
 void MainWindow::viewSource()

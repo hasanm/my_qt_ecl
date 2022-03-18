@@ -51,6 +51,7 @@
 #include <QtWidgets>
 #include <QtWebEngineWidgets>
 #include "mainwindow.h"
+#include "cl_bridge_utils.hpp"
 
 MainWindow::MainWindow(const QUrl& url)
 {
@@ -83,9 +84,10 @@ MainWindow::MainWindow(const QUrl& url)
 
     QAction *myAction = new QAction(tr("My Action"), this);
     myAction->setIcon(QIcon(":/ele.png"));
-    toolBar->addAction(myAction);
     connect(myAction, &QAction::triggered, this, &MainWindow::onMyAction);
-    
+    toolBar->addAction(myAction);
+
+
     toolBar->addWidget(locationEdit);
 
     QMenu *viewMenu = menuBar()->addMenu(tr("&View"));
@@ -115,15 +117,43 @@ MainWindow::MainWindow(const QUrl& url)
 
 void MainWindow::onMyAction()
 {
-    QTextEdit *textEdit = new QTextEdit(nullptr);
-    textEdit->setAttribute(Qt::WA_DeleteOnClose);
-    textEdit->adjustSize();
-    textEdit->move(this->geometry().center() - textEdit->rect().center());
-    textEdit->show();
+  QFile file("myAction.js");
+  if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    return;
 
-    view->page()->toHtml([textEdit](const QString &html){
-        textEdit->setPlainText(html);
-    });
+  QTextStream in(&file);
+  QString code = "";
+  while (!in.atEnd()) {
+    QString line = in.readLine();
+    code.append("\n");
+    code.append(line);
+  }
+
+  // QTextEdit *textEdit = new QTextEdit(nullptr);
+  // textEdit->setAttribute(Qt::WA_DeleteOnClose);
+  // textEdit->adjustSize();
+  // textEdit->move(this->geometry().center() - textEdit->rect().center());
+  // textEdit->show();
+
+  // view->page()->toHtml([textEdit](const QString &html){
+  //                        textEdit->setPlainText(html);
+  //                      });
+  // textEdit->setPlainText(code);
+
+
+  // view->page()->setInspectedPage(view->page());
+
+  // string s=cl_obj(cl_eval("say-hello")).to_std_string();
+
+  // QString message = QString::fromStdString(s);
+
+  // qDebug() << message << endl;
+
+  // code = QStringLiteral("alert(%1)".arg(message));
+
+  // view->page()->runJavaScript(code);
+
+  view->page()
 }
 
 void MainWindow::viewSource()

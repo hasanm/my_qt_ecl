@@ -121,13 +121,7 @@ void MainWindow::onMyAction()
   if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     return;
 
-  QTextStream in(&file);
-  QString code = "";
-  while (!in.atEnd()) {
-    QString line = in.readLine();
-    code.append("\n");
-    code.append(line);
-  }
+  QString code = file.readAll();
 
   // QTextEdit *textEdit = new QTextEdit(nullptr);
   // textEdit->setAttribute(Qt::WA_DeleteOnClose);
@@ -151,9 +145,7 @@ void MainWindow::onMyAction()
 
   // code = QStringLiteral("alert(%1)".arg(message));
 
-  // view->page()->runJavaScript(code);
-
-  view->page()
+  view->page()->runJavaScript(code);
 }
 
 void MainWindow::viewSource()

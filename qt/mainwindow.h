@@ -81,9 +81,9 @@ protected slots:
     void removeEmbeddedElements();
 
 private:
-    QString jQuery;
-    QWebEngineView *view;
-    QLineEdit *locationEdit;
-    QAction *rotateAction;
-    int progress;
+  QString jQuery;
+  QWebEngineView *view;
+  QLineEdit *locationEdit;
+  QAction *rotateAction;
+  int progress;
 };

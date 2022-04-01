@@ -15,13 +15,17 @@
     // saveBt.click();
     // alert(saveBt);
 
-    var item = qt.jQuery("#inp\\:submitJprmCode", qt.jQuery("iframe").get(0).contentWindow.document)[0];
-    item.click();
+    var item = qt.jQuery("#inp\\:displayPrntForm", qt.jQuery("iframe").get(0).contentWindow.document)[0];
+    // alert(item);
+    // item.click();
 
-
-    item = qt.jQuery("a.button-action[aria-label='Save']", qt.jQuery("iframe").get(0).contentWindow.document)[0];
+    item = qt.jQuery("#inp\\:submitJprmCode", qt.jQuery("iframe").get(0).contentWindow.document)[0];
     item.click();
-    alert (item);
+    // 
+    // 
+    // item = qt.jQuery("a.button-action[aria-label='Save']", qt.jQuery("iframe").get(0).contentWindow.document)[0];
+    // item.click();
+    // alert (item);
     
     // alert(qt.jQuery("#inp:submitJprmCode").attr("name"));
                                   })();

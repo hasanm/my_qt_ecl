@@ -53,6 +53,8 @@
 #include "mainwindow.h"
 #include "cl_bridge_utils.hpp"
 
+
+
 MainWindow::MainWindow(const QUrl& url)
 {
     setAttribute(Qt::WA_DeleteOnClose, true);
@@ -67,6 +69,7 @@ MainWindow::MainWindow(const QUrl& url)
 
     view = new QWebEngineView(this);
     view->load(url);
+
     connect(view, &QWebEngineView::loadFinished, this, &MainWindow::adjustLocation);
     connect(view, &QWebEngineView::titleChanged, this, &MainWindow::adjustTitle);
     connect(view, &QWebEngineView::loadProgress, this, &MainWindow::setProgress);
@@ -123,6 +126,8 @@ void MainWindow::onMyAction()
 
   QString code = file.readAll();
 
+  view->page()->runJavaScript(code);  
+
   // QTextEdit *textEdit = new QTextEdit(nullptr);
   // textEdit->setAttribute(Qt::WA_DeleteOnClose);
   // textEdit->adjustSize();
@@ -145,7 +150,14 @@ void MainWindow::onMyAction()
 
   // code = QStringLiteral("alert(%1)".arg(message));
 
-  view->page()->runJavaScript(code);
+  // view->page()->runJavaScript(code);
+
+  // view->page()->runJavaScript("alert(navigator.userAgent)");
+
+  // code = QStringLiteral("qt.jQuery('#inp\\:submitJprmCode', qt.jQuery('iframe').get(0).contentWindow.document)[0].id");
+  // view->page()->runJavaScript(code, [] (const QVariant &v) {
+  //                                     qDebug() << v.toString();
+  //                                   });
 }
 
 void MainWindow::viewSource()
@@ -157,7 +169,7 @@ void MainWindow::viewSource()
     textEdit->show();
 
     view->page()->toHtml([textEdit](const QString &html){
-        textEdit->setPlainText(html);
+                           textEdit->setPlainText(html);
     });
 }
 
@@ -236,3 +248,8 @@ void MainWindow::removeEmbeddedElements()
     QString code = QStringLiteral("qt.jQuery('embed').remove()");
     view->page()->runJavaScript(code);
 }
+
+
+/* Local Variables:  */
+/* c-basic-offset: 4 */
+/* End:              */

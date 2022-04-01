@@ -85,10 +85,20 @@ MainWindow::MainWindow(const QUrl& url)
     toolBar->addAction(view->pageAction(QWebEnginePage::Reload));
     toolBar->addAction(view->pageAction(QWebEnginePage::Stop));
 
-    QAction *myAction = new QAction(tr("My Action"), this);
-    myAction->setIcon(QIcon(":/ele.png"));
-    connect(myAction, &QAction::triggered, this, &MainWindow::onMyAction);
-    toolBar->addAction(myAction);
+    eleAction = new QAction(tr("Ele Action"), this);
+    eleAction->setIcon(QIcon(":/ele.png"));
+    connect(eleAction, &QAction::triggered, this, &MainWindow::onEleAction);
+    toolBar->addAction(eleAction);
+
+    sheepAction = new QAction(tr("Sheep Action"), this);
+    sheepAction->setIcon(QIcon(":/sheep.png"));
+    connect(sheepAction, &QAction::triggered, this, &MainWindow::onSheepAction);
+    toolBar->addAction(sheepAction);
+
+    dogAction = new QAction(tr("Dog Action"), this);
+    dogAction->setIcon(QIcon(":/dog.png"));
+    connect(dogAction, &QAction::triggered, this, &MainWindow::onDogAction);
+    toolBar->addAction(dogAction);
 
 
     toolBar->addWidget(locationEdit);
@@ -247,6 +257,39 @@ void MainWindow::removeEmbeddedElements()
 {
     QString code = QStringLiteral("qt.jQuery('embed').remove()");
     view->page()->runJavaScript(code);
+}
+
+void MainWindow::onEleAction()
+{
+    QFile file("ele.js");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        return;
+    
+    QString code = file.readAll();
+
+    view->page()->runJavaScript(code);      
+}
+
+void MainWindow::onSheepAction()
+{
+    QFile file("sheep.js");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        return;
+
+    QString code = file.readAll();
+
+    view->page()->runJavaScript(code);  
+}
+
+void MainWindow::onDogAction()
+{
+    QFile file("dog.js");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        return;
+
+    QString code = file.readAll();
+
+    view->page()->runJavaScript(code);  
 }
 
 

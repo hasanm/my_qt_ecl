@@ -71,7 +71,11 @@ protected slots:
     void finishLoading(bool);
 
     void viewSource();
-    void onMyAction();  
+    void onMyAction();
+    void onEleAction();
+    void onSheepAction();
+    void onDogAction(); 
+  
 
     void highlightAllLinks();
     void rotateImages(bool invert);
@@ -81,9 +85,19 @@ protected slots:
     void removeEmbeddedElements();
 
 private:
-  QString jQuery;
-  QWebEngineView *view;
-  QLineEdit *locationEdit;
-  QAction *rotateAction;
-  int progress;
+    QString jQuery;
+    QWebEngineView *view;
+    QLineEdit *locationEdit;
+    QAction *rotateAction;
+    
+    QAction *eleAction;
+    QAction *sheepAction;
+    QAction *dogAction; 
+    int progress;
 };
+
+
+
+/* Local Variables:  */
+/* c-basic-offset: 4 */
+/* End:              */

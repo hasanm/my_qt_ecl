@@ -91,7 +91,12 @@ int main(int argc, char * argv[])
     if (argc > 1)
         url = QUrl::fromUserInput(argv[1]);
     else
-        url = QUrl("http://www.google.com/ncr");
+        url = QUrl("https://banner-bandev.uleth.ca/");
+
+    QScreen *screen = QGuiApplication::primaryScreen();
+    QRect rec = screen->availableGeometry();
+    qDebug() << "Hello " << rec.width() << " x " << rec.height();    
+
     MainWindow *browser = new MainWindow(url);
     browser->resize(1024, 768);
     browser->show();

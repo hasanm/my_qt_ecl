@@ -66,7 +66,6 @@ protected slots:
 
     void adjustLocation();
     void changeLocation();
-    void adjustTitle();
     void setProgress(int p);
     void finishLoading(bool);
 

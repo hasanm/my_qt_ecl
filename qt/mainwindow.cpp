@@ -60,6 +60,8 @@ MainWindow::MainWindow(const QUrl& url)
     setAttribute(Qt::WA_DeleteOnClose, true);
     progress = 0;
 
+    setWindowTitle("MyOwnBrowser");
+
     QFile file;
     file.setFileName(":/jquery.min.js");
     file.open(QIODevice::ReadOnly);
@@ -71,7 +73,6 @@ MainWindow::MainWindow(const QUrl& url)
     view->load(url);
 
     connect(view, &QWebEngineView::loadFinished, this, &MainWindow::adjustLocation);
-    connect(view, &QWebEngineView::titleChanged, this, &MainWindow::adjustTitle);
     connect(view, &QWebEngineView::loadProgress, this, &MainWindow::setProgress);
     connect(view, &QWebEngineView::loadFinished, this, &MainWindow::finishLoading);
 
@@ -195,24 +196,15 @@ void MainWindow::changeLocation()
     view->setFocus();
 }
 
-void MainWindow::adjustTitle()
-{
-    if (progress <= 0 || progress >= 100)
-        setWindowTitle(view->title());
-    else
-        setWindowTitle(QStringLiteral("%1 (%2%)").arg(view->title()).arg(progress));
-}
 
 void MainWindow::setProgress(int p)
 {
     progress = p;
-    adjustTitle();
 }
 
 void MainWindow::finishLoading(bool)
 {
     progress = 100;
-    adjustTitle();
     view->page()->runJavaScript(jQuery);
 
     rotateImages(rotateAction->isChecked());

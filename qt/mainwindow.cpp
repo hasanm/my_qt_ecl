@@ -101,6 +101,11 @@ MainWindow::MainWindow(const QUrl& url)
     connect(dogAction, &QAction::triggered, this, &MainWindow::onDogAction);
     toolBar->addAction(dogAction);
 
+    giraffeAction = new QAction(tr("Giraffe Action"), this);
+    giraffeAction->setIcon(QIcon(":/giraffe.png"));
+    connect(giraffeAction, &QAction::triggered, this, &MainWindow::onGiraffeAction);
+    toolBar->addAction(giraffeAction);
+
 
     toolBar->addWidget(locationEdit);
 
@@ -276,6 +281,18 @@ void MainWindow::onSheepAction()
 void MainWindow::onDogAction()
 {
     QFile file("dog.js");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        return;
+
+    QString code = file.readAll();
+
+    view->page()->runJavaScript(code);  
+}
+
+
+void MainWindow::onGiraffeAction()
+{
+    QFile file("giraffe.js");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         return;
 

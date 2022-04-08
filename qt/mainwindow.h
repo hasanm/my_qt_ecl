@@ -73,7 +73,8 @@ protected slots:
     void onMyAction();
     void onEleAction();
     void onSheepAction();
-    void onDogAction(); 
+    void onDogAction();
+    void onGiraffeAction();
   
 
     void highlightAllLinks();
@@ -91,7 +92,8 @@ private:
     
     QAction *eleAction;
     QAction *sheepAction;
-    QAction *dogAction; 
+    QAction *dogAction;
+    QAction *giraffeAction;     
     int progress;
 };
 
